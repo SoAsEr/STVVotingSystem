@@ -13,7 +13,9 @@ with open('votes.csv') as csv_file:
         if line_count == 0:
             line_count += 1
         else:
-            person = [row[2], row[3], row[4], row[5], row[6]]
+            person = []
+            for i in range(0, len(row)):
+                person.append(row[i])
             votes.append(person)
             line_count += 1
 
@@ -47,27 +49,11 @@ def getSmallestCandidates(candidateDictionary):
                 break
     return returnArray
 
-candidateDictionary={
-    "root": Candidate("root", root=True),
-    "Lucynda Amo" : Candidate("Lucynda Amo"),
-    "Alessandro Maioli": Candidate("Alessandro Maioli"),
-    "Auguste Pfeiffer": Candidate("Auguste Pfeiffer"),
-    "Carson Giles" : Candidate("Carson Giles"),
-    "Daniel Lin" : Candidate("Daniel Lin"),
-    "Eli Wasserman" : Candidate("Eli Wasserman"),
-    "Jackson McCarthy" : Candidate("Jackson McCarthy"),
-    "Janki Raythattha" : Candidate("Janki Raythattha"),
-    "Julia Brown" : Candidate("Julia Brown"),
-    "Khadeeja Qureshi" : Candidate("Khadeeja Qureshi"),
-    "Kira Sehgal" : Candidate("Kira Sehgal"),
-    "Liam Massey" : Candidate("Liam Massey"),
-    "Roei Zakut" : Candidate("Roei Zakut"),
-    "Sam Bezilla" : Candidate("Sam Bezilla"),
-    "Sam Harshbarger" : Candidate("Sam Harshbarger"),
-    "Saumya Malik" : Candidate("Saumya Malik"),
-    "Stosh Omiecinski" : Candidate("Stosh Omiecinski"),
-    "Talia Fiester" : Candidate("Talia Fiester")
-}
+candidateDictionary={"root": Candidate("root", root=True)}
+for row in votes:
+    for candidate in row:
+        if not candidate in candidateDictionary:
+            candidateDictionary[candidate]=Candidate(candidate)
 
 root=BallotTreeNode("root",candidateDictionary)
 for voteRow in votes:
